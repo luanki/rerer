@@ -1,43 +1,51 @@
+import Full from '@/views/full.vue';
+
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: 'home',
+    name: 'Homesssss',
+    component: Full,
     icon: 'ios-alarm',
-    component: () => import('@/views/Home.vue'),
     children: [
       {
         path: 'child1',
         name: 'Child1',
         icon: 'ios-alarm',
-        component: () => import('@/components/HelloWorld.vue')
+        component: () => import('@/views/child1.vue')
       },
       {
         path: 'child2',
         name: 'Child2',
         icon: 'ios-alarm',
-        component: () => import('@/components/HelloWorld.vue')
+        component: () => import('@/views/child2.vue')
       }
     ]
   },
   {
-    path: '/about',
+    path: 'about',
     name: 'About',
     icon: 'ios-alarm',
-    component: () => import('@/views/About.vue'),
+    component: Full,
     children: [
       {
-        path: '/child3',
+        path: 'child3',
         name: 'Child3',
         icon: 'ios-alarm',
-        component: () => import('@/components/HelloWorld.vue')
+        component: () => import('@/views/child3.vue')
       },
       {
-        path: '/child4',
+        path: 'child4',
         name: 'Child4',
         icon: 'ios-alarm',
-        component: () => import('@/components/HelloWorld.vue')
+        component: () => import('@/views/child4.vue')
       }
     ]
+  },
+  {
+    path: 'test',
+    name: 'Test',
+    icon: 'ios-alarm',
+    component: () => import('@/views/test.vue')
   }
 ];
 

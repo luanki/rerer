@@ -1,13 +1,12 @@
 <template>
   <div>
-    test{{ name }}
-    <Button @click="click">Default</Button>
+    child2
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Test',
+  name: 'Child2',
   data() {
     return {
       name: 43232

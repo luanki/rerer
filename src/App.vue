@@ -1,13 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <SysLayout />
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+import SysLayout from '@/components/basic/layout.vue';
+
+export default {
+  name: 'Home',
+  components: {
+    SysLayout
+  }
+};
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
