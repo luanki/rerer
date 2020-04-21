@@ -1,28 +1,51 @@
 <template>
-  <Menu theme="dark" width="auto" class="aa">
-    <div v-for="(menu, index) in menus" :key="index">
-      <Submenu v-if="menu.children && menu.children.length" :name="menu.name">
-        <template slot="title">
+  <div>
+    <Menu theme="dark" width="auto" v-show="!isCollapsed">
+      <template v-for="(menu, index) in menus">
+        <Submenu v-if="menu.children && menu.children.length" :name="menu.name" :key="index">
+          <template slot="title">
+            <Icon :type="menu.icon"></Icon>
+            <span>{{ menu.name }}</span>
+          </template>
+          <MenuItem
+            v-for="(child, i) in menu.children"
+            :key="i"
+            :name="child.name"
+            :to="`/${menu.path}/${child.path}`"
+          >
+            <!-- <Icon :type="child.icon"></Icon> -->
+            <span>{{ child.name }}</span>
+          </MenuItem>
+        </Submenu>
+
+        <MenuItem v-else :name="menu.name" :to="`/${menu.path}`" :key="index">
           <Icon :type="menu.icon"></Icon>
           <span>{{ menu.name }}</span>
-        </template>
-        <MenuItem
-          v-for="(child, i) in menu.children"
-          :key="i"
-          :name="child.name"
-          :to="`/${menu.path}/${child.path}`"
-        >
-          <!-- <Icon :type="child.icon"></Icon> -->
-          <span>{{ child.name }}</span>
         </MenuItem>
-      </Submenu>
+      </template>
+    </Menu>
 
-      <MenuItem v-else :name="menu.name" :to="`/${menu.path}`">
-        <Icon :type="menu.icon"></Icon>
-        <span>{{ menu.name }}</span>
-      </MenuItem>
+    <div v-show="isCollapsed">
+      <template v-for="(menu, index) in menus">
+        <Dropdown
+          placement="right"
+          :key="index"
+          v-if="menu.children && menu.children.length"
+          transfer
+        >
+          <Icon :type="menu.icon"></Icon>
+          <DropdownMenu slot="list">
+            <DropdownItem v-for="(child, i) in menu.children" :key="i">
+              <router-link :to="`/${menu.path}/${child.path}`">{{ child.name }}</router-link>
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        <router-link v-else :to="`/${menu.path}`" :key="index">
+          <Icon :type="menu.icon" :title="menu.name"></Icon>
+        </router-link>
+      </template>
     </div>
-  </Menu>
+  </div>
 </template>
 
 <script>
@@ -30,6 +53,12 @@ import routes from '@/router/router.js';
 
 export default {
   name: 'SystemMenu',
+  props: {
+    isCollapsed: {
+      type: Boolean,
+      required: true
+    }
+  },
   data() {
     return {
       menus: routes
@@ -41,6 +70,11 @@ export default {
       arrows.forEach(v => {
         v.style.display = attr;
       });
+    }
+  },
+  watch: {
+    isCollapsed: newValue => {
+      console.log(newValue);
     }
   }
 };
@@ -67,17 +101,16 @@ export default {
   vertical-align: middle;
   font-size: 16px;
 }
-.collapsed-menu span {
-  width: 0px;
-  transition: width 0.2s ease;
-}
-.collapsed-menu i.ivu-menu-submenu-title-icon {
-  display: none;
-}
-.collapsed-menu i {
-  transform: translateX(5px);
-  transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
-  vertical-align: middle;
-  font-size: 22px;
+.collapsed-menu {
+  span {
+    width: 0px;
+    transition: width 0.2s ease;
+  }
+  i {
+    transform: translateX(5px);
+    transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
+    vertical-align: middle;
+    font-size: 22px;
+  }
 }
 </style>

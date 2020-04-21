@@ -1,14 +1,14 @@
 <template>
   <Layout>
     <Sider
-      ref="side1"
+      ref="side"
       collapsible
       :collapsed-width="78"
       v-model="isCollapsed"
-      :style="{ position: 'fixed', height: '100vh', left: 0, overflow: 'auto' }"
+      :style="{ height: '100vh', overflow: 'auto' }"
       @on-collapse="collapse"
     >
-      <SystemMenu :class="menuClasses" ref="sss" />
+      <SystemMenu :class="menuClasses" ref="menu" :isCollapsed="isCollapsed" />
     </Sider>
     <Layout>
       <Header class="layout-header-bar">
@@ -41,12 +41,12 @@ export default {
     }
   },
   methods: {
-    collapse(bool) {
-      if (bool) {
-        // this.$refs.sss && this.$refs.sss.displayArrow('none');
-      } else {
-        // this.$refs.sss && this.$refs.sss.displayArrow('inline');
-      }
+    collapse() {
+      // if (bool) {
+      //   this.$refs.menu && this.$refs.menu.displayArrow('none');
+      // } else {
+      //   this.$refs.menu && this.$refs.menu.displayArrow('inline');
+      // }
     }
   }
 };
