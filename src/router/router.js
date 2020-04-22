@@ -24,7 +24,7 @@ const routes = [
   {
     path: 'about',
     name: 'About',
-    icon: 'ios-alarm',
+    icon: 'md-appstore',
     component: Full,
     children: [
       {
@@ -44,7 +44,7 @@ const routes = [
   {
     path: 'test',
     name: 'Test',
-    icon: 'ios-alarm',
+    icon: 'ios-at',
     component: () => import('@/views/test.vue')
   }
 ];
