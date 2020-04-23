@@ -1,6 +1,13 @@
 <template>
   <div>
-    <Menu theme="dark" width="auto" v-show="!isCollapsed">
+    <Menu
+      v-show="!isCollapsed"
+      theme="dark"
+      width="auto"
+      :active-name="currentMenu"
+      :open-names="openNames"
+      @on-select="select"
+    >
       <template v-for="(menu, index) in menus">
         <Submenu v-if="menu.children && menu.children.length" :name="menu.name" :key="index">
           <template slot="title">
@@ -13,7 +20,6 @@
             :name="child.name"
             :to="`/${menu.path}/${child.path}`"
           >
-            <!-- <Icon :type="child.icon"></Icon> -->
             <span>{{ child.name }}</span>
           </MenuItem>
         </Submenu>
@@ -25,7 +31,7 @@
       </template>
     </Menu>
 
-    <div v-show="isCollapsed">
+    <div v-show="isCollapsed" class="collapsed">
       <template v-for="(menu, index) in menus">
         <Dropdown
           placement="right"
@@ -33,14 +39,14 @@
           v-if="menu.children && menu.children.length"
           transfer
         >
-          <Icon :type="menu.icon"></Icon>
+          <Icon :type="menu.icon" class="ivu-menu-item"></Icon>
           <DropdownMenu slot="list">
             <DropdownItem v-for="(child, i) in menu.children" :key="i">
               <router-link :to="`/${menu.path}/${child.path}`">{{ child.name }}</router-link>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <router-link v-else :to="`/${menu.path}`" :key="index">
+        <router-link v-else :to="`/${menu.path}`" :key="index" class="ivu-menu-item">
           <Icon :type="menu.icon" :title="menu.name"></Icon>
         </router-link>
       </template>
@@ -61,7 +67,9 @@ export default {
   },
   data() {
     return {
-      menus: routes
+      menus: routes,
+      currentMenu: 'Child1',
+      openNames: ['Homesssss']
     };
   },
   methods: {
@@ -70,6 +78,10 @@ export default {
       arrows.forEach(v => {
         v.style.display = attr;
       });
+    },
+    select(name) {
+      console.log(name);
+      this.currentMenu = name;
     }
   },
   watch: {
@@ -81,25 +93,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ivu-menu-item {
-  text-align: left;
-}
-.ivu-menu-submenu {
-  text-align: left;
-}
-.menu-item span {
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: bottom;
-  transition: width 0.2s ease 0.2s;
-}
-.menu-item i {
-  transform: translateX(0px);
-  transition: font-size 0.2s ease, transform 0.2s ease;
-  vertical-align: middle;
-  font-size: 16px;
+.menu-item {
+  .ivu-menu-dark.ivu-menu-vertical {
+    text-align: left;
+    .ivu-menu-item {
+      background-color: #515a6e;
+      &.ivu-menu-item-active,
+      &:hover {
+        border-right: none;
+        color: #fff !important;
+        background-color: #363e4f !important;
+      }
+    }
+    span {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: bottom;
+      transition: width 0.2s ease 0.2s;
+    }
+    i {
+      transform: translateX(0px);
+      transition: font-size 0.2s ease, transform 0.2s ease;
+      vertical-align: middle;
+      font-size: 16px;
+    }
+  }
 }
 .collapsed-menu {
   span {
@@ -107,10 +127,30 @@ export default {
     transition: width 0.2s ease;
   }
   i {
-    transform: translateX(5px);
     transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
     vertical-align: middle;
-    font-size: 22px;
+    font-size: 20px;
+  }
+}
+.collapsed {
+  color: rgba(255, 255, 255, 0.7);
+  & > * {
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    text-align: center;
+    &:hover {
+      color: #fff !important;
+      background-color: #363e4f;
+    }
+  }
+  .ivu-menu-item {
+    display: block;
+    padding: 14px 29px;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
   }
 }
 </style>

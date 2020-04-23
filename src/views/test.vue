@@ -3,7 +3,7 @@
     <p>increase:</p>
     state: {{ count }} <br />
     getter: {{ getCount }} <br />
-    <Button @click="increase">add</Button>
+    <Button @click="increaseww">add</Button>
     <Button @click="actionIncrease">addAction</Button>
   </div>
 </template>
@@ -30,14 +30,17 @@ export default {
   },
 
   methods: {
-    increase() {
-      this.INCREMENT(2);
+    ...mapMutations({
+      aaaa: INCRAESE
+    }),
+    ...mapMutations([[INCRAESE]]),
+    ...mapActions(['increase']),
+    increaseww() {
+      this.aaaa(2);
     },
     actionIncrease() {
-      this.increment(4);
-    },
-    ...mapMutations([INCRAESE]),
-    ...mapActions(['increment'])
+      this.increase(4);
+    }
   }
 };
 </script>

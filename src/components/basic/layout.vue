@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     menuClasses() {
-      return ['menu-item', this.isCollapsed ? 'collapsed-menu' : ''];
+      return ['menu-list', this.isCollapsed ? 'collapsed-menu' : ''];
     }
   },
   methods: {
