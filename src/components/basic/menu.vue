@@ -4,6 +4,7 @@
       v-show="!isCollapsed"
       theme="dark"
       width="auto"
+      ref="menu"
       :active-name="currentMenu"
       :open-names="openNames"
       @on-select="select"
@@ -68,8 +69,8 @@ export default {
   data() {
     return {
       menus: routes,
-      currentMenu: 'Child1',
-      openNames: ['Homesssss']
+      currentMenu: '',
+      openNames: []
     };
   },
   methods: {
@@ -80,20 +81,34 @@ export default {
       });
     },
     select(name) {
-      console.log(name);
+      console.log(this, name);
       this.currentMenu = name;
+    },
+    openSideList() {
+      this.openNames = [];
+      if (this.$route.matched.length > 2) {
+        this.openNames.push(this.$route.matched[1].name);
+      }
+      console.log(this.openNames)
+      this.$nextTick(() => {
+        this.$refs.menu.updateOpened();
+      });
     }
   },
   watch: {
-    isCollapsed: newValue => {
+    isCollapsed: function(newValue) {
       console.log(newValue);
+    },
+    $route: function() {
+      this.openSideList();
+      this.currentMenu = this.$route.name;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.menu-item {
+.menu-list {
   .ivu-menu-dark.ivu-menu-vertical {
     text-align: left;
     .ivu-menu-item {
@@ -101,7 +116,7 @@ export default {
       &.ivu-menu-item-active,
       &:hover {
         border-right: none;
-        color: #fff !important;
+        color: #1cc7a4 !important;
         background-color: #363e4f !important;
       }
     }
@@ -140,7 +155,7 @@ export default {
     overflow: hidden;
     text-align: center;
     &:hover {
-      color: #fff !important;
+      color: #1cc7a4 !important;
       background-color: #363e4f;
     }
   }

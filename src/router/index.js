@@ -11,10 +11,15 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'App',
+      name: 'Content',
       component: Full,
       redirect: '/home/child1',
       children: routes
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/login/index.vue')
     }
   ]
 });
