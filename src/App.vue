@@ -1,18 +1,12 @@
 <template>
   <div id="app">
-    <SysLayout />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import SysLayout from '@/components/basic/layout.vue';
-
 export default {
-  name: 'Home',
-  components: {
-    SysLayout
-  }
+  name: 'Home'
 };
 </script>
 <style lang="scss">
