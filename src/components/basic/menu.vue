@@ -89,7 +89,6 @@ export default {
       if (this.$route.matched.length > 2) {
         this.openNames.push(this.$route.matched[1].name);
       }
-      console.log(this.openNames, 312312312);
       this.$nextTick(() => {
         this.$refs.menu.updateOpened();
       });

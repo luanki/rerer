@@ -3,7 +3,7 @@
     <p>increase:</p>
     state: {{ count }} <br />
     getter: {{ getCount }} <br />
-    <Button @click="increaseww">add</Button>
+    <Button @click="increaseSync">add</Button>
     <Button @click="actionIncrease">addAction</Button>
   </div>
 </template>
@@ -11,8 +11,9 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import { INCRAESE } from '@/store/increase/mutations.js';
-
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('increase');
+
+import { homeGet, homePost } from '@/server/home/api.js';
 
 export default {
   name: 'Test',
@@ -30,17 +31,26 @@ export default {
   },
 
   methods: {
-    ...mapMutations({
-      aaaa: INCRAESE
-    }),
-    ...mapMutations([[INCRAESE]]),
+    ...mapMutations([INCRAESE]),
     ...mapActions(['increase']),
-    increaseww() {
-      this.aaaa(2);
+    increaseSync() {
+      this.INCRAESE(2);
     },
     actionIncrease() {
       this.increase(4);
+    },
+    async getHttp() {
+      let res = await homeGet();
+      console.log(res);
+    },
+    async postHttp() {
+      let res = await homePost();
+      console.log(res);
     }
+  },
+  created() {
+    this.getHttp();
+    this.postHttp();
   }
 };
 </script>
