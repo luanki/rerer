@@ -14,6 +14,7 @@ import { INCRAESE } from '@/store/increase/mutations.js';
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('increase');
 
 import { homeGet, homePost } from '@/server/home/api.js';
+import HttpRequest from '@/common/js/ajax.js';
 
 export default {
   name: 'Test',
@@ -41,7 +42,7 @@ export default {
     },
     async getHttp() {
       let res = await homeGet();
-      console.log(res);
+      console.log('getHttp', res);
     },
     async postHttp() {
       let res = await homePost();
@@ -50,7 +51,8 @@ export default {
   },
   created() {
     this.getHttp();
-    this.postHttp();
+    HttpRequest.get('/home/test/dfdsf').then(r => console.log(r))
+    // this.postHttp();
   }
 };
 </script>

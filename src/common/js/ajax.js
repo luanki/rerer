@@ -33,6 +33,7 @@ class HttpRequest {
     // 拦截响应
     instance.interceptors.response.use(
       respone => {
+        console.log(respone)
         if (respone.status === 200) {
           const retCode = respone.data && Number(respone.data.ret);
           if (retCode !== 0) {
