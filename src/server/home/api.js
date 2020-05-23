@@ -9,3 +9,7 @@ export function homeGet(params) {
 export function homePost(params) {
   return HttpRequest.post(API.HOMT_TEST, params);
 }
+
+export function deviceList(params) {
+  return HttpRequest.get(API.DEVICE_LIST, params);
+}

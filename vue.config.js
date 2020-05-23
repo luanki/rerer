@@ -16,6 +16,16 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+      '/api': {
+        secure: false,
+        changeOrigin: true,
+        target: 'http://192.168.1.238',
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
     before: require('./mock/test.js')
   }
 };

@@ -1,9 +1,9 @@
 // 启一个服务
 module.exports = app => {
-  app.post('/api/home/test', function(req, res) {
+  app.post(new RegExp('/home/test'), function(req, res) {
     res.json({ a: 4, ret: 0, fdsf: 33 });
   });
-  app.get('/api/home/test', function(req, res) {
+  app.get(new RegExp('/home/test'), function(req, res) {
     res.json({ a: 4, ret: 0 });
   });
 };

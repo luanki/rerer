@@ -13,8 +13,7 @@ import { createNamespacedHelpers } from 'vuex';
 import { INCRAESE } from '@/store/increase/mutations.js';
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('increase');
 
-import { homeGet, homePost } from '@/server/home/api.js';
-import HttpRequest from '@/common/js/ajax.js';
+import { homeGet, homePost, deviceList } from '@/server/home/api.js';
 
 export default {
   name: 'Test',
@@ -51,8 +50,8 @@ export default {
   },
   created() {
     this.getHttp();
-    HttpRequest.get('/home/test/dfdsf').then(r => console.log(r))
-    // this.postHttp();
+    this.postHttp();
+    deviceList({ take: 10, skip: 0 }).then(r => console.log('device', r));
   }
 };
 </script>
