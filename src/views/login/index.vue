@@ -1,30 +1,34 @@
 <template>
-  <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-    <FormItem prop="user">
-      <Input type="text" v-model="formInline.user" placeholder="Username">
-        <Icon type="ios-person-outline" slot="prepend"></Icon>
-      </Input>
-    </FormItem>
-    <FormItem prop="password">
-      <Input type="password" v-model="formInline.password" placeholder="Password">
-        <Icon type="ios-lock-outline" slot="prepend"></Icon>
-      </Input>
-    </FormItem>
-    <FormItem>
-      <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
-    </FormItem>
-  </Form>
+  <div class="login-container">
+    <Form ref="formLogin" :model="formLogin" :rules="ruleInline">
+      <h3 class="title">欢迎登录</h3>
+      <FormItem prop="account">
+        <Input type="text" v-model="formLogin.account" placeholder="用户名">
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+        </Input>
+      </FormItem>
+      <FormItem prop="password">
+        <Input type="password" v-model="formLogin.password" placeholder="密码">
+          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+        </Input>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" style="" @click="handleSubmit('formLogin')">登录</Button>
+      </FormItem>
+    </Form>
+  </div>
 </template>
 <script>
+import { login } from '@/server/login/api.js';
 export default {
   data() {
     return {
-      formInline: {
-        user: '',
+      formLogin: {
+        account: '',
         password: ''
       },
       ruleInline: {
-        user: [{ required: true, message: 'Please fill in the user name', trigger: 'blur' }],
+        account: [{ required: true, message: 'Please fill in the account name', trigger: 'blur' }],
         password: [
           { required: true, message: 'Please fill in the password.', trigger: 'blur' },
           {
@@ -39,14 +43,41 @@ export default {
   },
   methods: {
     handleSubmit(name) {
-      this.$refs[name].validate(valid => {
+      this.$refs[name].validate(async valid => {
         if (valid) {
+          await login(this.formLogin);
           this.$Message.success('Success!');
-        } else {
-          this.$Message.error('Fail!');
         }
       });
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.login-container {
+  min-height: 100%;
+  width: 100%;
+  background-color: #2d3a4b;
+  overflow: hidden;
+
+  form {
+    width: 520px;
+    margin: 0 auto;
+    padding: 160px 35px 0;
+
+    .title {
+      font-size: 26px;
+      color: #fff;
+      margin: 0px auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .ivu-btn {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+  }
+}
+</style>

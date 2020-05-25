@@ -20,10 +20,10 @@ module.exports = {
       '/api': {
         secure: false,
         changeOrigin: true,
-        target: 'http://192.168.1.238',
-        pathRewrite: {
-          '^/api': ''
-        }
+        target: 'https://192.168.1.148'
+        // pathRewrite: {
+        //   '^/api': ''
+        // }
       }
     },
     before: require('./mock/test.js')

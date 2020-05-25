@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Notice } from 'view-design';
 
 const TIME_OUT = 10 * 1000 * 6;
 const apiBaseUrl = process.env.NODE_ENV === 'production' ? '/api/' : '/api/';
@@ -33,12 +34,14 @@ class HttpRequest {
     // 拦截响应
     instance.interceptors.response.use(
       respone => {
-        console.log(respone)
         if (respone.status === 200) {
-          const retCode = respone.data && Number(respone.data.ret);
+          const retCode = respone.data && Number(respone.data.code);
           if (retCode !== 0) {
             // 提示错误
-            console.log(respone.data.msg);
+            Notice.error({
+              title: '提示',
+              desc: respone.data.message
+            });
             return Promise.reject(respone);
           }
           // TODO 登录失效的code,跳转到登录页
@@ -54,7 +57,7 @@ class HttpRequest {
         }
         // 手动停止请求 absort
         if (error.__CANCEL__ !== true) {
-          console.log(errorMessage);
+          Notice(errorMessage);
         }
         return Promise.reject(error);
       }

@@ -1,4 +1,4 @@
-import { API_PREFIX } from '@/common/js/const.js';
+import { API_PREFIX } from '@/common/const.js';
 
 export const HOMT_TEST = `${API_PREFIX}/home/test`;
 

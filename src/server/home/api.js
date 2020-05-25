@@ -1,4 +1,4 @@
-import HttpRequest from '@/common/js/ajax.js';
+import HttpRequest from '@/common/ajax.js';
 
 import * as API from './index.js';
 
