@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { login } from '@/server/login/api.js';
+import { getSHA256 } from '@/common/util.js';
 export default {
   data() {
     return {
@@ -45,7 +45,10 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(async valid => {
         if (valid) {
-          await login(this.formLogin);
+          await this.$store.dispatch('user/login', {
+            ...this.formLogin,
+            password: getSHA256(this.formLogin.password)
+          });
           this.$Message.success('Success!');
         }
       });

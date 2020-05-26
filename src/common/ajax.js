@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Notice } from 'view-design';
+import store from '@/store/index.js';
 
 const TIME_OUT = 10 * 1000 * 6;
 const apiBaseUrl = process.env.NODE_ENV === 'production' ? '/api/' : '/api/';
@@ -13,8 +14,9 @@ class HttpRequest {
     // 拦截请求
     instance.interceptors.request.use(
       config => {
-        // 在header里面添加token
-        config.headers.taoken = '';
+        // // 在header里面添加token
+        let token = store.state.user.token;
+        token && (config.headers.token = token);
         if (config.method === 'post') {
           config.headers['Conten-Type'] = config.headers['Content-Type']
             ? config.header['Content-Type']

@@ -12,8 +12,6 @@ Vue.use(ViewUI);
 
 Vue.config.productionTip = false;
 
-// require('../mock/test.js');
-
 new Vue({
   router,
   store,
