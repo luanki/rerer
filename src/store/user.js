@@ -32,8 +32,8 @@ const actions = {
   async getUserInfo({ commit }) {
     let res = await userInfo();
     commit(SET_NAME, res.data.name || '');
-    cookie.setCookie('name', res.data.name);
     commit(SET_TEL, res.data.tel || '');
+    cookie.setCookie('name', res.data.name);
     cookie.setCookie('tel', res.data.tel);
   }
 };

@@ -50,6 +50,7 @@ export default {
             password: getSHA256(this.formLogin.password)
           });
           this.$Message.success('Success!');
+          this.$router.push({ path: '/' });
         }
       });
     }

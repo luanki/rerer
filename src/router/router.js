@@ -46,6 +46,18 @@ const routes = [
     name: 'Test',
     icon: 'ios-at',
     component: () => import('@/views/test.vue')
+  },
+  {
+    path: '404',
+    name: '404',
+    icon: 'ios-at',
+    component: () => import('@/views/error-page/404.vue')
+  },
+  {
+    path: '401',
+    name: '401',
+    icon: 'ios-at',
+    component: () => import('@/views/error-page/401.vue')
   }
 ];
 
