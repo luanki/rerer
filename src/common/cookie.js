@@ -59,7 +59,7 @@ class Cookie {
     let len = cookieArr.length;
     for (let i = 0; i < len; i++) {
       let data = cookieArr[i];
-      let k = data.split('=')[0];
+      let k = data.split('=')[0].trim();
       let v = data.split('=')[1];
       cookieObj[k] = v;
     }

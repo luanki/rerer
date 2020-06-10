@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Test',
+  name: 'Child1',
   data() {
     return {
       name: 43232

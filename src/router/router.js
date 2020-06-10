@@ -1,10 +1,17 @@
 import Full from '@/views/full.vue';
 
-const routes = [
+export const constantRoutes = [
+  {
+    path: '/login',
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/views/login/index.vue')
+  },
   {
     path: 'home',
     name: 'Homesssss',
     component: Full,
+    redirect: '/home/child1',
     icon: 'ios-alarm',
     children: [
       {
@@ -22,6 +29,30 @@ const routes = [
     ]
   },
   {
+    path: 'test',
+    name: 'Test',
+    icon: 'ios-at',
+    component: () => import('@/views/test.vue')
+  },
+  {
+    path: '/404',
+    name: '404',
+    icon: 'ios-at',
+    hidden: true,
+    component: () => import('@/views/error-page/404.vue')
+  },
+  {
+    path: '/401',
+    name: '401',
+    icon: 'ios-at',
+    hidden: true,
+    component: () => import('@/views/error-page/401.vue')
+  },
+  { path: '*', redirect: '/404', hidden: true }
+];
+
+export const asyncRoutes = [
+  {
     path: 'about',
     name: 'About',
     icon: 'md-appstore',
@@ -31,34 +62,16 @@ const routes = [
         path: 'child3',
         name: 'Child3',
         icon: 'ios-alarm',
+        meta: { roles: ['admin', 'visitor'] },
         component: () => import('@/views/child3.vue')
       },
       {
         path: 'child4',
         name: 'Child4',
         icon: 'ios-alarm',
+        meta: { roles: ['admin'] },
         component: () => import('@/views/child4.vue')
       }
     ]
-  },
-  {
-    path: 'test',
-    name: 'Test',
-    icon: 'ios-at',
-    component: () => import('@/views/test.vue')
-  },
-  {
-    path: '404',
-    name: '404',
-    icon: 'ios-at',
-    component: () => import('@/views/error-page/404.vue')
-  },
-  {
-    path: '401',
-    name: '401',
-    icon: 'ios-at',
-    component: () => import('@/views/error-page/401.vue')
   }
 ];
-
-export default routes;

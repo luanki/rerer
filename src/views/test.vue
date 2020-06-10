@@ -10,7 +10,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import { INCRAESE } from '@/store/increase/mutations.js';
+import { INCRAESE } from '@/store/modules/increase/mutations.js';
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('increase');
 
 import { homeGet, homePost, deviceList } from '@/server/home/api.js';

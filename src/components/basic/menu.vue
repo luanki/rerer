@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import routes from '@/router/router.js';
+import { constantRoutes } from '@/router/router.js';
 
 export default {
   name: 'SystemMenu',
@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      menus: routes,
+      menus: constantRoutes.filter(v => !v.hidden),
       currentMenu: '',
       openNames: []
     };
