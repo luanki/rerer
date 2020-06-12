@@ -1,10 +1,10 @@
 // 启一个服务
 module.exports = app => {
   app.post(new RegExp('/home/test'), function(req, res) {
-    res.json({ a: 4, ret: 0, fdsf: 33 });
+    res.json({ a: 4, code: 0, fdsf: 33 });
   });
   app.get(new RegExp('/home/test'), function(req, res) {
-    res.json({ a: 4, ret: 0 });
+    res.json({ a: 4, code: 0 });
   });
 };
 

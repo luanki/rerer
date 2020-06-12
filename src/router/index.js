@@ -31,14 +31,13 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' });
     } else {
       try {
-        console.log(store, [...store.state.user.roles])
+        console.log(store, [...store.state.user.roles]);
         let roles = store.state.user.roles;
         if (roles.length) {
           next();
         } else {
-          debugger
           let info = await store.dispatch('user/getUserInfo');
-          console.log(info)
+          console.log(info);
           let addRoutes = await store.dispatch('permission/generateRoutes', info.roles);
           router.addRoutes(addRoutes);
           next({ ...to, replace: true });

@@ -1,7 +1,7 @@
 import { login, userInfo } from '@/server/user/api.js';
 import cookie from '@/common/cookie.js';
 const state = {
-  token: '',
+  token: cookie.getCookie('token'),
   userName: '',
   tel: '',
   roles: []
@@ -14,7 +14,6 @@ export const SET_ROLES = 'SET_ROLES';
 
 const mutations = {
   [SET_TOKEN](state, payload) {
-    debugger
     state.token = payload;
   },
   [SET_NAME](state, payload) {
@@ -29,17 +28,15 @@ const mutations = {
 };
 
 const actions = {
-  async login({ commit, dispatch }, payload) {
+  async login({ commit }, payload) {
     let res = await login(payload);
     commit(SET_TOKEN, res.data.token);
     cookie.setCookie('token', res.data.token);
-    // dispatch('getUserInfo');
     return res;
   },
   async getUserInfo({ commit }) {
-    debugger
     let res = await userInfo();
-    console.log(342423432,res)
+    console.log(342423432, res);
     let roles = [];
     if (res.name === 'jack') {
       roles = ['admin'];

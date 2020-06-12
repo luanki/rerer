@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Notice } from 'view-design';
-import store from '@/store/index.js';
+import cookie from '@/common/cookie.js';
 
 const TIME_OUT = 10 * 1000 * 6;
 const apiBaseUrl = process.env.NODE_ENV === 'production' ? '/api/' : '/api/';
@@ -15,7 +15,7 @@ class HttpRequest {
     instance.interceptors.request.use(
       config => {
         // // 在header里面添加token
-        let token = store.state.user.token;
+        let token = cookie.getCookie('token');
         token && (config.headers.token = token);
         if (config.method === 'post') {
           config.headers['Conten-Type'] = config.headers['Content-Type']
