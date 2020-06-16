@@ -1,4 +1,5 @@
 import Full from '@/views/full.vue';
+import SysLayout from '@/components/basic/layout.vue';
 
 export const constantRoutes = [
   {
@@ -47,16 +48,16 @@ export const constantRoutes = [
     icon: 'ios-at',
     hidden: true,
     component: () => import('@/views/error-page/401.vue')
-  },
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ];
 
 export const asyncRoutes = [
   {
-    path: 'about',
+    path: '/about',
     name: 'About',
     icon: 'md-appstore',
-    component: Full,
+    component: SysLayout,
+    redirect: '/about/child3',
     children: [
       {
         path: 'child3',
@@ -73,5 +74,6 @@ export const asyncRoutes = [
         component: () => import('@/views/child4.vue')
       }
     ]
-  }
+  },
+  { path: '*', redirect: '/404', hidden: true }
 ];

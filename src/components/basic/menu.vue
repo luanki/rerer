@@ -7,7 +7,6 @@
       ref="menu"
       :active-name="currentMenu"
       :open-names="openNames"
-      @on-select="select"
     >
       <template v-for="(menu, index) in menus">
         <Submenu v-if="menu.children && menu.children.length" :name="menu.name" :key="index">
@@ -19,13 +18,13 @@
             v-for="(child, i) in menu.children"
             :key="i"
             :name="child.name"
-            :to="`/${menu.path}/${child.path}`"
+            :to="getPath(`${menu.path}/${child.path}`)"
           >
             <span>{{ child.name }}</span>
           </MenuItem>
         </Submenu>
 
-        <MenuItem v-else :name="menu.name" :to="`/${menu.path}`" :key="index">
+        <MenuItem v-else :name="menu.name" :to="getPath(menu.path)" :key="index">
           <Icon :type="menu.icon"></Icon>
           <span>{{ menu.name }}</span>
         </MenuItem>
@@ -43,11 +42,13 @@
           <Icon :type="menu.icon" class="ivu-menu-item"></Icon>
           <DropdownMenu slot="list">
             <DropdownItem v-for="(child, i) in menu.children" :key="i">
-              <router-link :to="`/${menu.path}/${child.path}`">{{ child.name }}</router-link>
+              <router-link :to="getPath(`${menu.path}/${child.path}`)">
+                {{ child.name }}
+              </router-link>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <router-link v-else :to="`/${menu.path}`" :key="index" class="ivu-menu-item">
+        <router-link v-else :to="getPath(menu.path)" :key="index" class="ivu-menu-item">
           <Icon :type="menu.icon" :title="menu.name"></Icon>
         </router-link>
       </template>
@@ -56,7 +57,7 @@
 </template>
 
 <script>
-import { constantRoutes } from '@/router/router.js';
+import { mapState } from 'vuex';
 
 export default {
   name: 'SystemMenu',
@@ -68,10 +69,14 @@ export default {
   },
   data() {
     return {
-      menus: constantRoutes.filter(v => !v.hidden),
       currentMenu: '',
       openNames: []
     };
+  },
+  computed: {
+    ...mapState({
+      menus: state => state.permission.routes.filter(v => !v.hidden)
+    })
   },
   methods: {
     displayArrow(attr) {
@@ -80,15 +85,23 @@ export default {
         v.style.display = attr;
       });
     },
-    select(name) {
-      console.log(this, name);
-      this.currentMenu = name;
+    getPath(path) {
+      let reg = /^\//;
+      if (reg.test(path)) {
+        return path;
+      } else {
+        return '/' + path;
+      }
     },
     openSideList() {
+      console.log('this.$router', this.$router, this.$route);
       this.openNames = [];
-      if (this.$route.matched.length > 2) {
+      if (this.$route.matched[0].name === 'main') {
         this.openNames.push(this.$route.matched[1].name);
+      } else {
+        this.openNames.push(this.$route.matched[0].name);
       }
+      console.log(this.openNames);
       this.$nextTick(() => {
         this.$refs.menu.updateOpened();
       });

@@ -13,6 +13,7 @@
     <Layout>
       <Header class="layout-header-bar">
         header
+        <Button @click="logout">logout</Button>
       </Header>
       <Content>
         Content
@@ -24,6 +25,7 @@
 
 <script>
 import SystemMenu from '@/components/basic/menu.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'SysLayout',
@@ -41,12 +43,20 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      userLogout: 'user/logout'
+    }),
     collapse() {
       // if (bool) {
       //   this.$refs.menu && this.$refs.menu.displayArrow('none');
       // } else {
       //   this.$refs.menu && this.$refs.menu.displayArrow('inline');
       // }
+    },
+    async logout() {
+      let res = await this.userLogout();
+      console.log('logout', res);
+      this.$router.push({ path: '/login' });
     }
   }
 };

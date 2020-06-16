@@ -7,10 +7,8 @@ import cookie from '@/common/cookie.js';
 import store from '@/store/index.js';
 
 Vue.use(VueRouter);
-
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     ...constantRoutes.filter(v => v.hidden),
     {
@@ -30,22 +28,22 @@ router.beforeEach(async (to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
-      try {
-        console.log(store, [...store.state.user.roles]);
-        let roles = store.state.user.roles;
-        if (roles.length) {
-          next();
-        } else {
+      let roles = store.state.user.roles;
+      if (roles.length) {
+        next();
+      } else {
+        try {
           let info = await store.dispatch('user/getUserInfo');
-          console.log(info);
-          let addRoutes = await store.dispatch('permission/generateRoutes', info.roles);
-          router.addRoutes(addRoutes);
+          let accessRoutes = await store.dispatch('permission/generateRoutes', info.roles);
+          console.log('accessRoutes', JSON.parse(JSON.stringify(accessRoutes[0])));
+          router.addRoutes(accessRoutes);
           next({ ...to, replace: true });
+        } catch (error) {
+          console.log(33);
+          await store.dispatch('user/resetToken');
+          console.log(22222222222222, error || 'Has Error');
+          next(`/login?redirect=${to.path}`);
         }
-      } catch (error) {
-        // await store.dispatch('user/resetToken');
-        // console.log(22222222222222,error || 'Has Error');
-        // next(`/login?redirect=${to.path}`);
       }
     }
   } else {

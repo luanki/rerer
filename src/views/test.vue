@@ -13,7 +13,7 @@ import { createNamespacedHelpers } from 'vuex';
 import { INCRAESE } from '@/store/modules/increase/mutations.js';
 const { mapState, mapGetters, mapMutations, mapActions } = createNamespacedHelpers('increase');
 
-import { homeGet, homePost, deviceList } from '@/server/home/api.js';
+import { homeGet, homePost } from '@/server/home/api.js';
 
 export default {
   name: 'Test',
@@ -51,7 +51,6 @@ export default {
   created() {
     this.getHttp();
     this.postHttp();
-    deviceList({ take: 10, skip: 0 }).then(r => console.log('device', r));
   }
 };
 </script>

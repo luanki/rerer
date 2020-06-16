@@ -1,7 +1,8 @@
 import { asyncRoutes, constantRoutes } from '@/router/router.js';
 
 const state = {
-  addRoutes: []
+  addRoutes: [],
+  routes: []
 };
 
 export const SET_ROUTES = 'SET_ROUTES';

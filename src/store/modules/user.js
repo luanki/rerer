@@ -1,4 +1,4 @@
-import { login, userInfo } from '@/server/user/api.js';
+import { login, userInfo, logout } from '@/server/user/api.js';
 import cookie from '@/common/cookie.js';
 const state = {
   token: cookie.getCookie('token'),
@@ -34,11 +34,16 @@ const actions = {
     cookie.setCookie('token', res.data.token);
     return res;
   },
+  async logout({ commit }) {
+    let res = await logout();
+    commit(SET_TOKEN, '');
+    cookie.setCookie('token', '');
+    return res;
+  },
   async getUserInfo({ commit }) {
     let res = await userInfo();
-    console.log(342423432, res);
     let roles = [];
-    if (res.name === 'jack') {
+    if (res.data.name !== 'jack') {
       roles = ['admin'];
     } else {
       roles = ['visitor'];
@@ -46,8 +51,6 @@ const actions = {
     commit(SET_NAME, res.data.name || '');
     commit(SET_TEL, res.data.tel || '');
     commit(SET_ROLES, roles);
-    cookie.setCookie('name', res.data.name);
-    cookie.setCookie('tel', res.data.tel);
     res.roles = roles;
     return res;
   },
