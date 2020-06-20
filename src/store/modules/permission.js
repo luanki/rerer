@@ -8,7 +8,7 @@ const state = {
 export const SET_ROUTES = 'SET_ROUTES';
 
 function hasPermission(roles, route) {
-  if (route.meta && route.meta.roles) {
+  if (route.meta && route.meta.roles && route.meta.roles.length) {
     return roles.some(role => route.meta.roles.includes(role));
   } else {
     return true;

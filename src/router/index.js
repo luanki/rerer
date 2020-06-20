@@ -39,7 +39,6 @@ router.beforeEach(async (to, from, next) => {
           router.addRoutes(accessRoutes);
           next({ ...to, replace: true });
         } catch (error) {
-          console.log(33);
           await store.dispatch('user/resetToken');
           console.log(22222222222222, error || 'Has Error');
           next(`/login?redirect=${to.path}`);

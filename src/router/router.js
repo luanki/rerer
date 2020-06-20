@@ -70,8 +70,23 @@ export const asyncRoutes = [
         path: 'child4',
         name: 'Child4',
         icon: 'ios-alarm',
-        meta: { roles: ['admin'] },
+        meta: { roles: [] },
         component: () => import('@/views/child4.vue')
+      }
+    ]
+  },
+  {
+    path: '/permission',
+    name: 'permission',
+    component: SysLayout,
+    icon: 'ios-at',
+    children: [
+      {
+        path: 'child3',
+        name: 'permission',
+        icon: 'ios-alarm',
+        meta: { roles: ['admin', 'visitor'] },
+        component: () => import('@/views/permission.vue')
       }
     ]
   },

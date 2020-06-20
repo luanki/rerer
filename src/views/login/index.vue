@@ -8,12 +8,17 @@
         </Input>
       </FormItem>
       <FormItem prop="password">
-        <Input type="password" v-model="formLogin.password" placeholder="密码">
+        <Input
+          type="password"
+          v-model="formLogin.password"
+          placeholder="密码"
+          @keyup.enter.native="handleSubmit"
+        >
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
         </Input>
       </FormItem>
       <FormItem>
-        <Button type="primary" style="" @click="handleSubmit('formLogin')">登录</Button>
+        <Button type="primary" style="" @click="handleSubmit">登录</Button>
       </FormItem>
     </Form>
   </div>
@@ -42,8 +47,8 @@ export default {
     };
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate(async valid => {
+    handleSubmit() {
+      this.$refs['formLogin'].validate(async valid => {
         if (valid) {
           await this.$store.dispatch('user/login', {
             ...this.formLogin,
